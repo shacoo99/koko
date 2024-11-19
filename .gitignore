@@ -1,24 +1,39 @@
-# Compiled class file
-*.class
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
-# Log file
-*.log
+import androidx.appcompat.app.AppCompatActivity;
 
-# BlueJ files
-*.ctxt
+public class MainActivity extends AppCompatActivity {
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
-*.zip
-*.tar.gz
-*.rar
+        // Initialize UI elements
+        EditText weightInput = findViewById(R.id.weightInput);
+        Button calculateButton = findViewById(R.id.calculateButton);
+        TextView resultText = findViewById(R.id.resultText);
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
+        // Set button click listener
+        calculateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Parse the weight directly, assuming it is entered as a valid number
+                double weight = Double.parseDouble(weightInput.getText().toString());
+
+                // Calculate water need based solely on weight
+                double waterMl = weight * 35; // 35ml per kg
+
+                // Convert ml to cups
+                double waterCups = waterMl / 250;
+
+                // Set the result directly without using String.format()
+                resultText.setText("You need " + waterCups + " cups of water daily.");
+            }
+        });
+    }
+}
